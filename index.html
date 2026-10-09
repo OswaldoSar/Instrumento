@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#6666AB" />
+  <meta name="description" content="Inventario SISCO del Estrés Académico — HBBS Human Behavior Business Science" />
+  <title>Inventario SISCO | HBBS</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="#inicio" aria-label="HBBS - inicio">
+        <img src="assets/logo-hbbs.png" alt="HBBS Human Behavior Business Science" class="brand__logo" />
+        <div class="brand__copy">
+          <span class="brand__eyebrow">Círculo de investigación</span>
+          <strong>Human Behavior Business Science</strong>
+        </div>
+      </a>
+      <div class="topbar__badge">Instrumento de investigación</div>
+    </div>
+  </header>
+
+  <main id="inicio" class="page-shell">
+    <section class="hero">
+      <div class="hero__copy">
+        <span class="pill">HBBS · Research Circle</span>
+        <h1>Inventario SISCO del Estrés Académico</h1>
+        <p class="hero__lead">Cuestionario de 31 ítems para reconocer características del estrés académico en estudiantes.</p>
+        <div class="hero__meta">
+          <span>⏱ 7–10 min</span>
+          <span>🔒 Respuestas confidenciales</span>
+          <span>✓ Participación voluntaria</span>
+        </div>
+      </div>
+      <div class="hero__mark" aria-hidden="true">
+        <div class="hero__mark-ring"></div>
+        <div class="hero__mark-ring hero__mark-ring--small"></div>
+      </div>
+    </section>
+
+    <section class="survey-card" aria-labelledby="surveyTitle">
+      <div class="progress-wrap" aria-label="Progreso del formulario">
+        <div class="progress-meta">
+          <span id="stepLabel">Inicio</span>
+          <span id="progressLabel">0%</span>
+        </div>
+        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+      </div>
+
+      <form id="siscoForm" novalidate>
+        <!-- Paso 0: introducción -->
+        <section class="form-step is-active" data-step="0">
+          <div class="section-kicker">Antes de comenzar</div>
+          <h2 id="surveyTitle">Información para el participante</h2>
+          <div class="info-panel">
+            <p>El presente cuestionario tiene como objetivo central reconocer las características del estrés que suele acompañar a los estudiantes durante sus estudios.</p>
+            <p>La sinceridad con que respondas será de gran utilidad para la investigación. La información proporcionada será totalmente confidencial y solo se manejarán resultados globales.</p>
+            <p>La participación es voluntaria y puedes decidir no continuar.</p>
+          </div>
+          <label class="consent-box">
+            <input type="checkbox" id="consent" required />
+            <span>He leído la información anterior y deseo participar voluntariamente.</span>
+          </label>
+        </section>
+
+        <!-- Paso 1: datos -->
+        <section class="form-step" data-step="1">
+          <div class="section-kicker">Datos generales</div>
+          <h2>Cuéntanos algunos datos básicos</h2>
+          <p class="section-help">Estos datos no forman parte de los 31 ítems del SISCO.</p>
+          <div class="field-grid">
+            <label class="field">
+              <span>Edad</span>
+              <input type="number" name="edad" min="10" max="99" inputmode="numeric" placeholder="Ej. 16" required />
+            </label>
+            <label class="field">
+              <span>Sexo</span>
+              <select name="sexo" required>
+                <option value="">Selecciona una opción</option>
+                <option>Femenino</option>
+                <option>Masculino</option>
+                <option>Prefiero no responder</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Grado</span>
+              <input type="text" name="grado" placeholder="Ej. 4.º de secundaria" required />
+            </label>
+            <label class="field">
+              <span>Sección</span>
+              <input type="text" name="seccion" placeholder="Ej. A" required />
+            </label>
+          </div>
+        </section>
+
+        <!-- Paso 2: filtro -->
+        <section class="form-step" data-step="2">
+          <div class="section-kicker">Ítems 1–2</div>
+          <h2>Preocupación o nerviosismo</h2>
+
+          <fieldset class="question-card" id="q1Card">
+            <legend><span class="qnum">1</span> Durante el transcurso de este semestre ¿has tenido momentos de preocupación o nerviosismo?</legend>
+            <p class="question-help">Si marcas “No”, el cuestionario concluye.</p>
+            <div class="choice-row choice-row--2">
+              <label class="choice"><input type="radio" name="p1" value="Sí" required /><span>Sí</span></label>
+              <label class="choice"><input type="radio" name="p1" value="No" required /><span>No</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="question-card" id="p2Block" hidden>
+            <legend><span class="qnum">2</span> Con la idea de obtener mayor precisión y utilizando una escala del 1 al 5, señala tu nivel de preocupación o nerviosismo.</legend>
+            <div class="scale-anchors"><span>1 · Poco</span><span>5 · Mucho</span></div>
+            <div class="numeric-scale" id="p2Scale"></div>
+          </fieldset>
+
+          <div id="noBranchNote" class="branch-note" hidden>
+            Gracias. Como seleccionaste “No”, no necesitas responder los ítems restantes. Puedes finalizar y enviar tu participación.
+          </div>
+        </section>
+
+        <!-- Pasos Likert -->
+        <section class="form-step" data-step="3">
+          <div class="section-kicker">Ítems 3–10 · Dimensión</div>
+          <h2>Estresores</h2>
+          <p class="section-help">Señala con qué frecuencia te inquietaron las siguientes situaciones.</p>
+          <div id="estresores"></div>
+          <div class="optional-box">
+            <label class="field"><span>Otra situación (especifique) <em>opcional</em></span><input type="text" name="otra_estresor" /></label>
+            <div id="otraEstresorFreq"></div>
+          </div>
+        </section>
+
+        <section class="form-step" data-step="4">
+          <div class="section-kicker">Ítems 11–16 · Síntomas</div>
+          <h2>Reacciones físicas</h2>
+          <p class="section-help">Indica con qué frecuencia las tuviste cuando estabas preocupado o nervioso.</p>
+          <div id="fisicas"></div>
+        </section>
+
+        <section class="form-step" data-step="5">
+          <div class="section-kicker">Ítems 17–21 · Síntomas</div>
+          <h2>Reacciones psicológicas</h2>
+          <p class="section-help">Indica con qué frecuencia las tuviste cuando estabas preocupado o nervioso.</p>
+          <div id="psicologicas"></div>
+        </section>
+
+        <section class="form-step" data-step="6">
+          <div class="section-kicker">Ítems 22–25 · Síntomas</div>
+          <h2>Reacciones comportamentales</h2>
+          <p class="section-help">Indica con qué frecuencia las tuviste cuando estabas preocupado o nervioso.</p>
+          <div id="comportamentales"></div>
+          <div class="optional-box">
+            <label class="field"><span>Otra reacción (especifique) <em>opcional</em></span><input type="text" name="otra_reaccion" /></label>
+            <div id="otraReaccionFreq"></div>
+          </div>
+        </section>
+
+        <section class="form-step" data-step="7">
+          <div class="section-kicker">Ítems 26–31 · Dimensión</div>
+          <h2>Estrategias de afrontamiento</h2>
+          <p class="section-help">Señala con qué frecuencia utilizaste las siguientes estrategias para enfrentar la situación que te causaba preocupación o nerviosismo.</p>
+          <div id="afrontamiento"></div>
+          <div class="optional-box">
+            <label class="field"><span>Otra estrategia (especifique) <em>opcional</em></span><input type="text" name="otra_afrontamiento" /></label>
+            <div id="otraAfrontamientoFreq"></div>
+          </div>
+        </section>
+
+        <!-- Paso final -->
+        <section class="form-step" data-step="8">
+          <div class="success-preview">
+            <div class="success-preview__icon">✓</div>
+            <div class="section-kicker">Último paso</div>
+            <h2>Revisa y envía tus respuestas</h2>
+            <p id="reviewText">Has completado el cuestionario. Al enviar, tus respuestas quedarán registradas para fines de investigación.</p>
+            <div class="privacy-note">HBBS utiliza esta información únicamente para el propósito declarado en el estudio.</div>
+          </div>
+        </section>
+
+        <div class="form-actions">
+          <button type="button" id="backBtn" class="btn btn--ghost" disabled>← Anterior</button>
+          <button type="button" id="nextBtn" class="btn btn--primary">Continuar →</button>
+          <button type="submit" id="submitBtn" class="btn btn--primary" hidden>Enviar respuestas</button>
+        </div>
+
+        <div id="formMessage" class="form-message" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <footer class="footer">
+      <img src="assets/favicon.png" alt="" aria-hidden="true" />
+      <div><strong>HBBS · Human Behavior Business Science</strong><span>Círculo de investigación</span></div>
+    </footer>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
